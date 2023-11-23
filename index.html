@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asteroids</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <canvas id="game"></canvas>
+
+    <script src="js/constants/gameConstants.js"></script>
+    <script src="js/game/Game.js"></script>
+    <script src="js/entities/Player.js"></script>
+    <script>
+        const canvas = document.getElementById("game");
+        const game = new Game(canvas);
+    </script>
+</body>
+</html>

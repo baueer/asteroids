@@ -1,0 +1,11 @@
+const GAME_STATE = {
+    START: "START",
+    RUNNING: "RUNNING",
+    PAUSED: "PAUSED",
+    GAMEOVER: "GAMEOVER"
+}
+
+const FPS = 60;
+const PLAYER_COLOR = "#0D1B2A";
+const PLAYER_MOVING_FORCE = 10;
+const PLAYER_MASS = 10;
