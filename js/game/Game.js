@@ -40,5 +40,17 @@ class Game {
         if (this.keysPressed["ArrowRight"]) {
             this.player.moveRight();
         }
+        if (this.keysPressed["ArrowUp"]) {
+            this.player.moveUp();
+        }
+        if (this.keysPressed["ArrowDown"]) {
+            this.player.moveDown();
+        }
+        if (this.keysPressed["z"]) {
+            this.player.rotateLeft();
+        }
+        if (this.keysPressed["c"]) {
+            this.player.rotateRight();
+        }
     }
 }
