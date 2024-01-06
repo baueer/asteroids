@@ -8,11 +8,15 @@ class Game {
         this.score = 0;
         this.lives = 3;
         this.player = new Player(this.ctx, this.canvas);
-        // this.asteroids = new Asteroid(this.ctx, this.canvas);
+        this.asteroids = [];
 
         this.keysPressed = {};
+        this.asteroidSpawnInterval = null;
         this.configureEventListeners();
+        this.configureWaves();
         window.requestAnimationFrame(this.gameLoop.bind(this));
+
+        this.wave = 0;
     }
 
     gameLoop() {
@@ -24,10 +28,28 @@ class Game {
     update() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.player.update();
-        // this.asteroids.update();
+        this.asteroids.forEach(asteroid => {
+            asteroid.update();
+        });
         this.player.projectiles.forEach(projectile => {
             projectile.update();
         });
+
+        waveSpan.innerText = this.wave;
+    }
+
+    configureWaves() {
+        let spawnedAsteroidsCount = 0;
+        this.asteroidSpawnInterval = setInterval(() => {
+            if (this.asteroids.length === 0) {
+                this.wave++;
+                spawnedAsteroidsCount = 0;
+            }
+            if (spawnedAsteroidsCount < this.wave * ASTEROIDS_WAVE_MULTIPLIER) {
+                this.asteroids.push(new Asteroid(this.ctx, this.canvas));
+                spawnedAsteroidsCount++;
+            }
+        }, ASTEROIDS_WAVE_INTERVAL);
     }
 
     configureEventListeners() {

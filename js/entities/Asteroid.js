@@ -12,6 +12,7 @@ class Asteroid {
         this.heading = Math.floor(Math.random() * 360) * Math.PI / 180;
 
         this.health = 4;
+        this.createdAt = Date.now();
     }
 
     update() {

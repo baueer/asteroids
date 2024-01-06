@@ -8,6 +8,10 @@ const startGameBtn = document.getElementById("start-game-btn");
 const pauseButton = document.getElementById("pause-btn");
 const resumeButton = document.getElementById("resume-btn");
 const quitButton = document.getElementById("quit-btn");
+// SPANS
+const scoreSpan = document.getElementById("score-count");
+const livesSpan = document.getElementById("lives-count");
+const waveSpan = document.getElementById("wave-count");
 
 let game = null;
 let state = GAME_STATE.START;

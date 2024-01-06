@@ -8,7 +8,6 @@ class Player {
         this.heading = 0;
 
         this.projectiles = [];
-        // this.projectile = new Projectile(this.ctx, this.canvas, {x: 500, y: 500}, 0);
 
         this.lastProjectileTimestamp = 0;
 
