@@ -1,11 +1,17 @@
 class Player {
-    constructor(ctx) {
+    constructor(ctx, canvas) {
         this.ctx = ctx;
+        this.canvas = canvas;
 
         this.position = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
         this.speed = { x: 0, y: 0 };
-
         this.heading = 0;
+
+        this.projectiles = [];
+        // this.projectile = new Projectile(this.ctx, this.canvas, {x: 500, y: 500}, 0);
+
+        this.lastProjectileTimestamp = 0;
+
     }
 
     update() {
@@ -18,11 +24,16 @@ class Player {
         this.ctx.save();
         this.ctx.translate(this.position.x, this.position.y);
         this.ctx.rotate(this.heading);
-
         this.drawPlayer();
         this.drawTrajectory();
-
         this.ctx.restore();
+
+        this.projectiles = this.projectiles.filter(projectile => {
+            return Date.now() - projectile.createdAt < PROJECTILE_DURATION;
+        });
+        this.projectiles.forEach(projectile => {
+            projectile.update();
+        });
     }
 
     moveLeft() {
@@ -47,6 +58,18 @@ class Player {
 
     rotateRight() {
         this.heading += PLAYER_ROTATION_SPEED;
+    }
+
+    shoot() {
+        const now = Date.now();
+        if (now - this.lastProjectileTimestamp < PROJECTILE_COOLDOWN) {
+            return;
+        }
+
+        this.projectiles.push(new Projectile(this.ctx, this.canvas, this.position, this.heading));
+        this.lastProjectileTimestamp = now;
+
+        console.log(this.projectiles);
     }
 
     applyFrictionAndLimitSpeed(speed) {

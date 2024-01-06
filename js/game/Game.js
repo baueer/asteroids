@@ -7,10 +7,10 @@ class Game {
 
         this.score = 0;
         this.lives = 3;
-        this.player = new Player(this.ctx);
-        this.asteroids = new Asteroid(this.ctx, this.canvas);
-        this.keysPressed = {};
+        this.player = new Player(this.ctx, this.canvas);
+        // this.asteroids = new Asteroid(this.ctx, this.canvas);
 
+        this.keysPressed = {};
         this.configureEventListeners();
         window.requestAnimationFrame(this.gameLoop.bind(this));
     }
@@ -24,7 +24,10 @@ class Game {
     update() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.player.update();
-        this.asteroids.update();
+        // this.asteroids.update();
+        this.player.projectiles.forEach(projectile => {
+            projectile.update();
+        });
     }
 
     configureEventListeners() {
@@ -54,6 +57,9 @@ class Game {
         }
         if (this.keysPressed["c"]) {
             this.player.rotateRight();
+        }
+        if (this.keysPressed["x"]) {
+            this.player.shoot();
         }
     }
 }
