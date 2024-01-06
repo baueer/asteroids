@@ -53,4 +53,28 @@ class Asteroid {
         this.ctx.textBaseline = "middle";
         this.ctx.fillText(this.health, this.position.x, this.position.y);
     }
+
+    bounceOff(collidingAsteroid) {
+        const dx = collidingAsteroid.position.x - this.position.x;
+        const dy = collidingAsteroid.position.y - this.position.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < this.radius + collidingAsteroid.radius) {
+            const collisionAngle = Math.atan2(dy, dx);
+            this.heading = (2 * collisionAngle - this.heading) % (2 * Math.PI);
+            collidingAsteroid.heading = (2 * collisionAngle - collidingAsteroid.heading) % (2 * Math.PI);
+
+            const tempSpeed = this.speed;
+            this.speed = collidingAsteroid.speed;
+            collidingAsteroid.speed = tempSpeed;
+
+            const overlap = this.radius + collidingAsteroid.radius - distance;
+            const separationVector = {x: dx / distance * overlap, y: dy / distance * overlap};
+            this.position.x -= separationVector.x;
+            this.position.y -= separationVector.y;
+            collidingAsteroid.position.x += separationVector.x;
+            collidingAsteroid.position.y += separationVector.y;
+        }
+    }
+
 }

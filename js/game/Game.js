@@ -21,6 +21,7 @@ class Game {
 
     gameLoop() {
         this.handleInputs();
+        this.handleAsteroidCollision();
         this.update();
         window.requestAnimationFrame(this.gameLoop.bind(this));
     }
@@ -82,6 +83,14 @@ class Game {
         }
         if (this.keysPressed["x"]) {
             this.player.shoot();
+        }
+    }
+
+    handleAsteroidCollision() {
+        for (let i = 0; i < this.asteroids.length; i++) {
+            for (let j = i + 1; j < this.asteroids.length; j++) {
+                this.asteroids[i].bounceOff(this.asteroids[j]);
+            }
         }
     }
 }
