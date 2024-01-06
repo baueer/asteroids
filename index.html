@@ -16,19 +16,66 @@
         <h1>Asteroids</h1>
         <h3>High score: <span id="high-score">934</span></h3>
         <div class="container">
-            <button id="start-game-btn">START</button>
-            <button id="settings-btn"">SETTINGS</button>
+            <button id="start-game-btn" class="menu-btn">START</button>
+            <button id="settings-btn" class="menu-btn">SETTINGS</button>
         </div>
     </div>
 
-    <!-- <canvas id="game"></canvas> -->
+    <div id="game-screen">
+        <button id="pause-btn" class="card">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <rect x="6" y="4" width="4" height="16" fill="currentColor"/>
+                <rect x="14" y="4" width="4" height="16" fill="currentColor"/>
+            </svg>
+        </button>
+        
+        <div class="card">
+            <h3>Score: <span id="score">0</span></h3>
+            <h3>Lives: <span id="lives-count">☆☆☆</span></h3>
+        </div>
+    </div>
 
-    <!-- <script src="js/constants/gameConstants.js"></script>
+    <div id="pause-screen">
+        <div id="pause-screen-menu" class="card">
+            <h2>PAUSED</h2>
+            <div class="container">
+                <button id="resume-btn" class="menu-btn">RESUME</button>
+                <button id="restart-btn" class="menu-btn">RESTART</button>
+                <button id="quit-btn" class="menu-btn">QUIT</button>
+            </div>
+        </div>
+    </div>
+    
+    <canvas id="game"></canvas>
+
+    <script src="js/constants/gameConstants.js"></script>
     <script src="js/game/Game.js"></script>
     <script src="js/entities/Player.js"></script>
     <script>
-        const canvas = document.getElementById("game");
-        const game = new Game(canvas);
-    </script> -->
+        const gameCanvas = document.getElementById("game");
+
+        const startGameBtn = document.getElementById("start-game-btn");
+        const homeScreen = document.getElementById("home-screen");
+        const gameScreen = document.getElementById("game-screen");
+        const pauseScreen = document.getElementById("pause-screen");
+        const pauseButton = document.getElementById("pause-btn");
+        const resumeButton = document.getElementById("resume-btn");
+        const restartButton = document.getElementById("restart-btn");
+
+        startGameBtn.addEventListener("click", () => {
+            homeScreen.style.display = "none";
+            gameCanvas.style.display = "block";
+            gameScreen.style.display = "flex";
+            const game = new Game(gameCanvas);
+        });
+
+        pauseButton.addEventListener("click", () => {
+            pauseScreen.style.display = "flex";
+        });
+
+        resumeButton.addEventListener("click", () => {
+            pauseScreen.style.display = "none";
+        });
+    </script>
 </body>
 </html>

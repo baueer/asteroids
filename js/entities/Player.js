@@ -78,6 +78,7 @@ class Player {
         this.ctx.setLineDash([5, 15]);
         this.ctx.moveTo(0, -PLAYER_SIZE / 2);
         this.ctx.lineTo(0, -PLAYER_SIZE*3);
+        this.ctx.strokeStyle = PLAYER_COLOR;
         this.ctx.stroke();
     }
 }

@@ -6,7 +6,7 @@ const GAME_STATE = {
 }
 
 const FPS = 60;
-const PLAYER_COLOR = "#0D1B2A";
+const PLAYER_COLOR = "#E0E1DD";
 const PLAYER_SIZE = 50;
 
 const PLAYER_MAX_SPEED = 10;
