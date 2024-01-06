@@ -1,14 +1,16 @@
 class Game {
     constructor(canvas) {
         this.canvas = canvas;
-        this.ctx = this.canvas.getContext("2d");
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
+        this.ctx = this.canvas.getContext("2d");
 
+        this.score = 0;
+        this.lives = 3;
         this.player = new Player(this.ctx);
-
+        this.asteroids = new Asteroid(this.ctx, this.canvas);
         this.keysPressed = {};
-        this.state = GAME_STATE.START;
+
         this.configureEventListeners();
         window.requestAnimationFrame(this.gameLoop.bind(this));
     }
@@ -22,6 +24,7 @@ class Game {
     update() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.player.update();
+        this.asteroids.update();
     }
 
     configureEventListeners() {
