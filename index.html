@@ -40,7 +40,6 @@
             <h2>PAUSED</h2>
             <div class="container">
                 <button id="resume-btn" class="menu-btn">RESUME</button>
-                <button id="restart-btn" class="menu-btn">RESTART</button>
                 <button id="quit-btn" class="menu-btn">QUIT</button>
             </div>
         </div>
@@ -51,31 +50,6 @@
     <script src="js/constants/gameConstants.js"></script>
     <script src="js/game/Game.js"></script>
     <script src="js/entities/Player.js"></script>
-    <script>
-        const gameCanvas = document.getElementById("game");
-
-        const startGameBtn = document.getElementById("start-game-btn");
-        const homeScreen = document.getElementById("home-screen");
-        const gameScreen = document.getElementById("game-screen");
-        const pauseScreen = document.getElementById("pause-screen");
-        const pauseButton = document.getElementById("pause-btn");
-        const resumeButton = document.getElementById("resume-btn");
-        const restartButton = document.getElementById("restart-btn");
-
-        startGameBtn.addEventListener("click", () => {
-            homeScreen.style.display = "none";
-            gameCanvas.style.display = "block";
-            gameScreen.style.display = "flex";
-            const game = new Game(gameCanvas);
-        });
-
-        pauseButton.addEventListener("click", () => {
-            pauseScreen.style.display = "flex";
-        });
-
-        resumeButton.addEventListener("click", () => {
-            pauseScreen.style.display = "none";
-        });
-    </script>
+    <script src="js/game/GameHandler.js"></script>
 </body>
 </html>
