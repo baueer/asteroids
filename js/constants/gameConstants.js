@@ -1,5 +1,6 @@
 const GAME_STATE = {
     START: "START",
+    STATS: "STATS",
     RUNNING: "RUNNING",
     PAUSED: "PAUSED",
     GAMEOVER: "GAMEOVER"

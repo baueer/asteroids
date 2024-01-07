@@ -16,6 +16,15 @@ class Game {
         animation = window.requestAnimationFrame(this.gameLoop.bind(this));
 
         this.wave = 0;
+        this.scoreMilestones = 0;
+
+        this.stats = {
+            score: null,
+            asteroidsDestroyed: 0,
+            projectilesFired: 0,
+            projectilesHit: 0,
+            duration: null
+        };
     }
 
     gameLoop() {
@@ -42,6 +51,8 @@ class Game {
         this.asteroids.forEach((asteroid, index) => {
             if (asteroid.health <= 0) {
                 this.asteroids.splice(index, 1);
+                this.score += 10;
+                this.stats.asteroidsDestroyed++;
             }
             asteroid.update();
         });
@@ -49,13 +60,21 @@ class Game {
             projectile.update();
         });
 
+        if (Math.floor(this.score / 150) > this.scoreMilestones) {
+            this.scoreMilestones = Math.floor(this.score / 150);
+            this.player.lives++;
+        }
+
         waveSpan.innerText = this.wave;
         if (this.player.lives <= 0) {
             state = GAME_STATE.GAMEOVER;
+            this.stats.duration = Math.round((Date.now() - startGameTime) / 1000);
+            gameOverScoreSpan.innerText = this.score;
             updateUI();
         } else {
             livesSpan.innerText = "☆".repeat(this.player.lives); 
         }
+        scoreSpan.innerText = this.score;
     }
 
     configureWaves() {
@@ -63,6 +82,9 @@ class Game {
         this.asteroidSpawnInterval = setInterval(() => {
             if (this.asteroids.length === 0) {
                 this.wave++;
+                if (this.wave > 1) {
+                    this.score += 20;
+                }
                 spawnedAsteroidsCount = 0;
             }
             if (spawnedAsteroidsCount < this.wave * ASTEROIDS_WAVE_MULTIPLIER) {
@@ -117,6 +139,7 @@ class Game {
         this.asteroids.forEach((asteroid, index) => {
             if (asteroid.isCollidingWithPlayer(this.player)) {
                 this.asteroids.splice(index, 1);
+                this.stats.asteroidsDestroyed++;
                 this.player.respawn();
             }
         });
@@ -126,8 +149,10 @@ class Game {
         this.player.projectiles.forEach((projectile, index) => {
             this.asteroids.forEach(asteroid => {
                 if (projectile.isCollidingWithAsteroid(asteroid)) {
+                    this.score += 1;
                     this.player.projectiles.splice(index, 1);
                     asteroid.health--;
+                    this.stats.projectilesHit++;
                 }
             });
         });

@@ -164,3 +164,28 @@ input[type="text"] {
     margin: 0.5rem 0 1rem 0;
     text-align: center;
 }
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.stats-grid-full-row {
+    grid-column: span 2;
+}
+
+.stats-grid table {
+    width: 100%;
+    border-collapse: collapse;
+    color: var(--main-color);
+    font-size: 1.2rem;
+}
+
+.stats-grid th, .stats-grid td {
+    border-bottom: 1px solid var(--main-color);
+    padding: 0.3rem;
+    text-align: left;
+}

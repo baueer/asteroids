@@ -15,7 +15,7 @@ class Player {
         this.visible = true;
         this.blinking = false;
 
-        this.lives = 1;
+        this.lives = 3;
     }
 
     update() {
@@ -89,8 +89,7 @@ class Player {
 
         this.projectiles.push(new Projectile(this.ctx, this.canvas, this.position, this.heading));
         this.lastProjectileTimestamp = now;
-
-        console.log(this.projectiles);
+        game.stats.projectilesFired++;
     }
 
     applyFrictionAndLimitSpeed(speed) {
