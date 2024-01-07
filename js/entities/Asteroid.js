@@ -11,7 +11,8 @@ class Asteroid {
         this.speed = Math.floor(Math.random() * 5) + 1;
         this.heading = Math.floor(Math.random() * 360) * Math.PI / 180;
 
-        this.health = 4;
+        this.health = ASTEROID_MAX_HEALTH;
+        this.color = ASTEROID_100_HEALTH_COLOR;
         this.createdAt = Date.now();
     }
 
@@ -31,6 +32,16 @@ class Asteroid {
             this.position.y = 0;
         }
 
+        if (this.health > ASTEROID_MAX_HEALTH * 0.75) {
+            this.color = ASTEROID_100_HEALTH_COLOR;
+        } else if (this.health > ASTEROID_MAX_HEALTH * 0.5) {
+            this.color = ASTEROID_75_HEALTH_COLOR;
+        } else if (this.health > ASTEROID_MAX_HEALTH * 0.25) {
+            this.color = ASTEROID_50_HEALTH_COLOR;
+        } else {
+            this.color = ASTEROID_25_HEALTH_COLOR;
+        }
+
         this.ctx.save();
         this.drawAsteroid();
         this.drawHealthText();
@@ -38,16 +49,17 @@ class Asteroid {
     }
 
     drawAsteroid() {
-        this.ctx.strokeStyle = ASTEROID_COLOR;
+        const size = Math.max(ASTEROID_SIZE * this.health / ASTEROID_MAX_HEALTH, ASTEROID_MIN_SIZE);
+        this.ctx.strokeStyle = this.color;
         this.ctx.lineWidth = 3;
         this.ctx.beginPath();
-        this.ctx.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI, false);
+        this.ctx.arc(this.position.x, this.position.y, size, 0, 2 * Math.PI, false);
         this.ctx.stroke();
         this.ctx.closePath();
     }
 
     drawHealthText() {
-        this.ctx.fillStyle = ASTEROID_COLOR;
+        this.ctx.fillStyle = this.color;
         this.ctx.font = "22px Chakra Petch";
         this.ctx.textAlign = "center";
         this.ctx.textBaseline = "middle";

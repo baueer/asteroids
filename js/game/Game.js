@@ -26,6 +26,7 @@ class Game {
             this.handlePlayerCollision();
         }
         this.handleAsteroidCollision();
+        this.handleProjectileCollision();
 
         this.update();
         window.requestAnimationFrame(this.gameLoop.bind(this));
@@ -35,10 +36,13 @@ class Game {
         if (state === GAME_STATE.PAUSED || state === GAME_STATE.GAMEOVER) {
             return;
         }
-        
+
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.player.update();
-        this.asteroids.forEach(asteroid => {
+        this.asteroids.forEach((asteroid, index) => {
+            if (asteroid.health <= 0) {
+                this.asteroids.splice(index, 1);
+            }
             asteroid.update();
         });
         this.player.projectiles.forEach(projectile => {
@@ -114,6 +118,17 @@ class Game {
             if (asteroid.isCollidingWithPlayer(this.player)) {
                 this.player.respawn();
             }
+        });
+    }
+
+    handleProjectileCollision() {
+        this.player.projectiles.forEach((projectile, index) => {
+            this.asteroids.forEach(asteroid => {
+                if (projectile.isCollidingWithAsteroid(asteroid)) {
+                    this.player.projectiles.splice(index, 1);
+                    asteroid.health--;
+                }
+            });
         });
     }
 }

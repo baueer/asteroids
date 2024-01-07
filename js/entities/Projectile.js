@@ -24,4 +24,12 @@ class Projectile {
         this.ctx.fill();
         this.ctx.closePath();
     }
+
+    isCollidingWithAsteroid(asteroid) {
+        const dx = asteroid.position.x - this.position.x;
+        const dy = asteroid.position.y - this.position.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        return distance < asteroid.radius + PROJECTILE_SIZE;
+    }
 }
