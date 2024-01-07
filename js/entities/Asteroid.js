@@ -77,4 +77,12 @@ class Asteroid {
         }
     }
 
+    isCollidingWithPlayer(player) {
+        const dx = player.position.x - this.position.x;
+        const dy = player.position.y - this.position.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        return distance < this.radius + player.hitboxRadius;
+    }
+
 }

@@ -8,12 +8,31 @@ class Player {
         this.heading = 0;
 
         this.projectiles = [];
-
         this.lastProjectileTimestamp = 0;
 
+        this.hitboxRadius = PLAYER_SIZE / Math.sqrt(3);
+        this.respawnTime = 0;
+        this.visible = true;
+        this.blinking = false;
+
+        this.lives = 3;
     }
 
     update() {
+        this.visible = (Date.now() - this.respawnTime > PLAYER_RESPAWN_TIME);
+
+        if (this.blinking && Date.now() > this.blinkEndTime) {
+            this.blinking = false;
+        }
+        
+        if (this.blinking && this.visible) {
+            if (Date.now() % 300 < 150) {
+                this.visible = false;
+            } else {
+                this.visible = true;
+            }
+        }
+
         this.position.x += this.speed.x;
         this.position.y += this.speed.y;
 
@@ -23,8 +42,11 @@ class Player {
         this.ctx.save();
         this.ctx.translate(this.position.x, this.position.y);
         this.ctx.rotate(this.heading);
-        this.drawPlayer();
-        this.drawTrajectory();
+        if (this.visible) {
+            this.drawPlayer();
+            this.drawTrajectory();
+            this.drawHitbox();
+        }
         this.ctx.restore();
 
         this.projectiles = this.projectiles.filter(projectile => {
@@ -102,5 +124,25 @@ class Player {
         this.ctx.lineTo(0, -PLAYER_SIZE*3);
         this.ctx.strokeStyle = PLAYER_COLOR;
         this.ctx.stroke();
+    }
+
+    drawHitbox() {
+        this.ctx.beginPath();
+        this.ctx.setLineDash([10, 5]);
+        this.ctx.arc(0, 0, this.hitboxRadius, 0, 2 * Math.PI);
+        this.ctx.strokeStyle = 'red';
+        this.ctx.stroke();
+    }
+
+    respawn() {
+        this.position = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+        this.speed = { x: 0, y: 0 };
+        this.heading = 0;
+        this.respawnTime = Date.now();
+        this.visible = false;
+        this.blinking = true;
+        this.blinkEndTime = Date.now() + PLAYER_BLINKING_TIME;
+
+        this.lives--;
     }
 }

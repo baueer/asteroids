@@ -6,7 +6,6 @@ class Game {
         this.ctx = this.canvas.getContext("2d");
 
         this.score = 0;
-        this.lives = 3;
         this.player = new Player(this.ctx, this.canvas);
         this.asteroids = [];
 
@@ -20,13 +19,23 @@ class Game {
     }
 
     gameLoop() {
-        this.handleInputs();
+        if (this.player.visible) {
+            this.handleInputs();
+        }
+        if (!this.player.blinking) {
+            this.handlePlayerCollision();
+        }
         this.handleAsteroidCollision();
+
         this.update();
         window.requestAnimationFrame(this.gameLoop.bind(this));
     }
 
     update() {
+        if (state === GAME_STATE.PAUSED || state === GAME_STATE.GAMEOVER) {
+            return;
+        }
+        
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.player.update();
         this.asteroids.forEach(asteroid => {
@@ -37,6 +46,12 @@ class Game {
         });
 
         waveSpan.innerText = this.wave;
+        if (this.player.lives <= 0) {
+            state = GAME_STATE.GAMEOVER;
+            updateUI();
+        } else {
+            livesSpan.innerText = "☆".repeat(this.player.lives); 
+        }
     }
 
     configureWaves() {
@@ -92,5 +107,13 @@ class Game {
                 this.asteroids[i].bounceOff(this.asteroids[j]);
             }
         }
+    }
+
+    handlePlayerCollision() {
+        this.asteroids.forEach(asteroid => {
+            if (asteroid.isCollidingWithPlayer(this.player)) {
+                this.player.respawn();
+            }
+        });
     }
 }

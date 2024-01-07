@@ -84,6 +84,10 @@ button:hover {
     z-index: 10;
 }
 
+#game-info-card {
+    min-width: 11.4rem;
+}
+
 #pause-btn {
     height: fit-content;
     padding: 0.25rem;
@@ -115,10 +119,6 @@ button:hover {
     justify-content: center;
     align-items: center;
     background-color: var(--bg-color);
-}
-
-#lives-count {
-    letter-spacing: 5px;
 }
 
 #pause-screen-menu {
