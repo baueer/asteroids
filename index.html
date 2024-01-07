@@ -14,9 +14,10 @@
 <body>
     <div id="home-screen" class="screen">
         <h1>Asteroids</h1>
-        <h3>High score: <span id="high-score">934</span></h3>
+        <h3 class="score-heading">High score: <span id="high-score">934</span></h3>
         <div class="container">
             <button id="start-game-btn" class="menu-btn">START</button>
+            <button id="stats-btn" class="menu-btn">STATS</button>
             <button id="settings-btn" class="menu-btn">SETTINGS</button>
         </div>
     </div>
@@ -43,6 +44,18 @@
             <div class="container">
                 <button id="resume-btn" class="menu-btn">RESUME</button>
                 <button id="quit-btn" class="menu-btn">QUIT</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="game-over-screen">
+        <div id="game-over-screen-menu" class="card">
+            <h2>GAME OVER</h2>
+            <h3 class="score-heading">Score: <span id="score">0</span></h3>
+            <input type="text" placeholder="Enter your name">
+            <div class="container">
+                <button id="restart-btn" class="menu-btn">RESTART</button>
+                <button id="menu-btn" class="menu-btn">MAIN MENU</button>
             </div>
         </div>
     </div>

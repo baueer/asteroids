@@ -84,6 +84,10 @@ button:hover {
     z-index: 10;
 }
 
+.score-heading {
+    font-size: initial;
+}
+
 #game-info-card {
     min-width: 11.4rem;
 }
@@ -121,7 +125,20 @@ button:hover {
     background-color: var(--bg-color);
 }
 
-#pause-screen-menu {
+#game-over-screen {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+#game-over-screen-menu {
     padding: 0.75rem 1rem;
     width: fit-content;
     height: fit-content;
@@ -134,4 +151,16 @@ button:hover {
 
 #lives-count {
     letter-spacing: 5px;
+}
+
+input[type="text"] {
+    background: none;
+    border: none;
+    border-bottom: 2px solid var(--main-color);
+    color: var(--main-color);
+    font-size: 1.25rem;
+    outline: none;
+    padding: 0.2rem;
+    margin: 0.5rem 0 1rem 0;
+    text-align: center;
 }

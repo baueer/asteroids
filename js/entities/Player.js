@@ -15,7 +15,7 @@ class Player {
         this.visible = true;
         this.blinking = false;
 
-        this.lives = 3;
+        this.lives = 1;
     }
 
     update() {

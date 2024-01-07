@@ -13,7 +13,7 @@ class Game {
         this.asteroidSpawnInterval = null;
         this.configureEventListeners();
         this.configureWaves();
-        window.requestAnimationFrame(this.gameLoop.bind(this));
+        animation = window.requestAnimationFrame(this.gameLoop.bind(this));
 
         this.wave = 0;
     }
@@ -29,7 +29,7 @@ class Game {
         this.handleProjectileCollision();
 
         this.update();
-        window.requestAnimationFrame(this.gameLoop.bind(this));
+        animation = window.requestAnimationFrame(this.gameLoop.bind(this));
     }
 
     update() {
@@ -114,8 +114,9 @@ class Game {
     }
 
     handlePlayerCollision() {
-        this.asteroids.forEach(asteroid => {
+        this.asteroids.forEach((asteroid, index) => {
             if (asteroid.isCollidingWithPlayer(this.player)) {
+                this.asteroids.splice(index, 1);
                 this.player.respawn();
             }
         });
